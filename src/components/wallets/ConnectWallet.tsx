@@ -1,30 +1,6 @@
 import React from 'react';
 import { Plus } from 'lucide-react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Chain } from 'wagmi';
-
-interface Account {
-  address: string;
-  balanceDecimals?: number;
-  balanceFormatted?: string;
-  balanceSymbol?: string;
-  displayBalance?: string;
-  displayName: string;
-  ensAvatar?: string;
-  ensName?: string;
-}
-
-interface CustomButtonProps {
-  account?: Account;
-  chain?: Chain & {
-    hasIcon: boolean;
-    iconUrl?: string;
-  };
-  openAccountModal?: () => void;
-  openChainModal?: () => void;
-  openConnectModal?: () => void;
-  mounted: boolean;
-}
 
 export function ConnectWallet() {
   return (
@@ -43,7 +19,7 @@ export function ConnectWallet() {
             openChainModal,
             openConnectModal,
             mounted,
-          }: CustomButtonProps) => {
+          }) => {
             const ready = mounted;
             const connected = ready && account && chain;
 
