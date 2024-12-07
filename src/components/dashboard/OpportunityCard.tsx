@@ -10,7 +10,7 @@ export function OpportunityCard() {
       </div>
 
       <div className="space-y-4">
-        <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+        <div className="bg-white/25 backdrop-blur-lg rounded-xl p-4">
           <p className="font-medium mb-2">Staking Opportunity</p>
           <p className="text-sm text-white/80 mb-3">Stake ETH for up to 12% APY</p>
           <button className="flex items-center gap-2 text-sm font-medium hover:gap-3 transition-all">
@@ -18,7 +18,7 @@ export function OpportunityCard() {
           </button>
         </div>
 
-        <div className="bg-white/10 backdrop-blur-lg rounded-xl p-4">
+        <div className="bg-white/25 backdrop-blur-lg rounded-xl p-4">
           <p className="font-medium mb-2">Upcoming Airdrop</p>
           <p className="text-sm text-white/80 mb-3">Eligible for LayerZero airdrop</p>
           <button className="flex items-center gap-2 text-sm font-medium hover:gap-3 transition-all">
