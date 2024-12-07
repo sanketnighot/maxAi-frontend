@@ -29,6 +29,7 @@ export function ProfileMenu() {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className="flex items-center gap-2 p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800"
+        aria-label="Open profile menu"
       >
         <div className="w-8 h-8 rounded-full bg-[rgb(5,0,255)] text-white flex items-center justify-center">
           <User className="w-5 h-5" />

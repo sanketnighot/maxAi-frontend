@@ -1,12 +1,13 @@
-import React from 'react';
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Header } from './components/layout/Header';
-import { ThemeProvider } from './contexts/ThemeContext';
-import { WalletProvider } from './contexts/WalletProvider';
-import Dashboard from './pages/Dashboard';
-import Analysis from './pages/Analysis';
-import Wallets from './pages/Wallets';
-import Settings from './pages/Settings';
+import React from "react";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Header } from "./components/layout/Header";
+import { ThemeProvider } from "./contexts/ThemeContext";
+import { WalletProvider } from "./contexts/WalletProvider";
+import Dashboard from "./pages/Dashboard";
+import Analysis from "./pages/Analysis";
+import Wallets from "./pages/Wallets";
+import Settings from "./pages/Settings";
+import { RecommendationsPage } from "./pages/Recommendations";
 
 function App() {
   return (
@@ -21,6 +22,10 @@ function App() {
                 <Route path="/analysis" element={<Analysis />} />
                 <Route path="/wallets" element={<Wallets />} />
                 <Route path="/settings" element={<Settings />} />
+                <Route
+                  path="/recommendations"
+                  element={<RecommendationsPage />}
+                />
               </Routes>
             </main>
           </div>

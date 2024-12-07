@@ -1,8 +1,8 @@
-import React from 'react';
-import { useAccount } from 'wagmi';
-import { WalletList } from '../components/wallets/WalletList';
-import { ConnectWallet } from '../components/wallets/ConnectWallet';
-import { ConnectWalletMessage } from '../components/shared/ConnectWalletMessage';
+import React from "react";
+import { useAccount } from "wagmi";
+import { WalletList } from "../components/wallets/WalletList";
+import { ConnectWallet } from "../components/wallets/ConnectWallet";
+import { ConnectWalletMessage } from "../components/shared/ConnectWalletMessage";
 
 export default function Wallets() {
   const { isConnected } = useAccount();
