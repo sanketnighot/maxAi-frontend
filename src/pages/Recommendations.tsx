@@ -45,7 +45,7 @@ export function RecommendationsPage() {
         <div className="flex items-center justify-between mb-6">
           <div className="flex items-center gap-2">
             <Sparkles className="w-6 h-6 text-primary" />
-            <h1 className="text-xl font-semibold">AI Recommendations</h1>
+            <h1 className="text-xl font-semibold">maxAI Tips</h1>
           </div>
           <button
             onClick={() => navigate(-1)}
