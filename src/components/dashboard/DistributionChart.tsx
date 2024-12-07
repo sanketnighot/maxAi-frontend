@@ -1,14 +1,14 @@
-import React, { useMemo } from 'react';
-import { PieChart } from 'lucide-react';
-import { useAccount, useBalance, useContractReads } from 'wagmi';
-import { mainnet } from 'wagmi/chains';
-import { parseAbi } from 'viem';
+import React, { useMemo } from "react";
+import { PieChart, AlertTriangle, Info } from "lucide-react";
+import { useAccount, useBalance, useContractReads } from "wagmi";
+import { mainnet } from "wagmi/chains";
+import { parseAbi } from "viem";
 
 // ERC20 ABI for the functions we need
 const erc20Abi = parseAbi([
-  'function balanceOf(address) view returns (uint256)',
-  'function symbol() view returns (string)',
-  'function decimals() view returns (uint8)',
+  "function balanceOf(address) view returns (uint256)",
+  "function symbol() view returns (string)",
+  "function decimals() view returns (uint8)",
 ]);
 
 export function DistributionChart() {
@@ -25,21 +25,21 @@ export function DistributionChart() {
     contracts: [
       // Add more token contracts here
       {
-        address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' as `0x${string}`, // WETH
+        address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" as `0x${string}`, // WETH
         abi: erc20Abi,
-        functionName: 'balanceOf',
+        functionName: "balanceOf",
         args: [address as `0x${string}`],
       },
       {
-        address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599' as `0x${string}`, // WBTC
+        address: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599" as `0x${string}`, // WBTC
         abi: erc20Abi,
-        functionName: 'balanceOf',
+        functionName: "balanceOf",
         args: [address as `0x${string}`],
       },
       {
-        address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48' as `0x${string}`, // USDC
+        address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" as `0x${string}`, // USDC
         abi: erc20Abi,
-        functionName: 'balanceOf',
+        functionName: "balanceOf",
         args: [address as `0x${string}`],
       },
     ],
@@ -49,51 +49,52 @@ export function DistributionChart() {
   const { data: tokenMetadata } = useContractReads({
     contracts: [
       {
-        address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' as `0x${string}`,
+        address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" as `0x${string}`,
         abi: erc20Abi,
-        functionName: 'symbol',
+        functionName: "symbol",
       },
       {
-        address: '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2' as `0x${string}`,
+        address: "0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2" as `0x${string}`,
         abi: erc20Abi,
-        functionName: 'decimals',
+        functionName: "decimals",
       },
       {
-        address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599' as `0x${string}`,
+        address: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599" as `0x${string}`,
         abi: erc20Abi,
-        functionName: 'symbol',
+        functionName: "symbol",
       },
       {
-        address: '0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599' as `0x${string}`,
+        address: "0x2260FAC5E5542a773Aa44fBCfeDf7C193bc2C599" as `0x${string}`,
         abi: erc20Abi,
-        functionName: 'decimals',
+        functionName: "decimals",
       },
       {
-        address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48' as `0x${string}`,
+        address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" as `0x${string}`,
         abi: erc20Abi,
-        functionName: 'symbol',
+        functionName: "symbol",
       },
       {
-        address: '0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48' as `0x${string}`,
+        address: "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48" as `0x${string}`,
         abi: erc20Abi,
-        functionName: 'decimals',
+        functionName: "decimals",
       },
     ],
   });
 
-  const colors = ['bg-blue-500', 'bg-orange-500', 'bg-green-500'];
+  const colors = ["bg-blue-500", "bg-orange-500", "bg-green-500"];
 
   // Process token data
   const portfolioData = useMemo(() => {
-    if (!ethBalance || !tokenBalances || !tokenMetadata || !isConnected) return [];
+    if (!ethBalance || !tokenBalances || !tokenMetadata || !isConnected)
+      return [];
 
     const tokens = [];
-    
+
     // Add ETH
     tokens.push({
-      label: 'Ethereum (ETH)',
-      value: '0',
-      color: 'bg-purple-500',
+      label: "Ethereum (ETH)",
+      value: "0",
+      color: "bg-purple-500",
       amount: ethBalance.formatted,
       balance: ethBalance.value,
     });
@@ -105,12 +106,12 @@ export function DistributionChart() {
 
       const symbol = tokenMetadata[i * 2].result as string;
       const decimals = tokenMetadata[i * 2 + 1].result as number;
-      
+
       const formatted = (Number(balance) / 10 ** decimals).toFixed(4);
-      
+
       tokens.push({
         label: `${symbol}`,
-        value: '0',
+        value: "0",
         color: colors[i],
         amount: formatted,
         balance,
@@ -118,28 +119,34 @@ export function DistributionChart() {
     }
 
     // Calculate percentages
-    const total = tokens.reduce((sum, token) => sum + BigInt(token.balance), BigInt(0));
-    
-    return tokens.map(token => ({
-      ...token,
-      value: ((Number(token.balance) / Number(total)) * 100).toFixed(1) + '%',
-    })).filter(token => Number(token.amount) > 0);
+    const total = tokens.reduce(
+      (sum, token) => sum + BigInt(token.balance),
+      BigInt(0)
+    );
 
+    return tokens
+      .map((token) => ({
+        ...token,
+        value: ((Number(token.balance) / Number(total)) * 100).toFixed(1) + "%",
+      }))
+      .filter((token) => Number(token.amount) > 0);
   }, [ethBalance, tokenBalances, tokenMetadata, isConnected]);
 
-  if (!address || portfolioData.length === 0) {
-    return (
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
-        <div className="flex items-center justify-between mb-6">
-          <h3 className="text-lg font-semibold">Portfolio Distribution</h3>
-          <PieChart className="w-5 h-5 text-gray-400" />
-        </div>
-        <div className="text-center text-gray-500 py-8">
-          {!address ? 'Connect your wallet to view portfolio' : 'Loading portfolio data...'}
-        </div>
-      </div>
-    );
-  }
+  // if (!address || portfolioData.length === 0) {
+  //   return (
+  //     <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
+  //       <div className="flex items-center justify-between mb-6">
+  //         <h3 className="text-lg font-semibold">Portfolio Distribution</h3>
+  //         <PieChart className="w-5 h-5 text-gray-400" />
+  //       </div>
+  //       <div className="text-center text-gray-500 py-8">
+  //         {!address
+  //           ? "Connect your wallet to view portfolio"
+  //           : "Loading portfolio data..."}
+  //       </div>
+  //     </div>
+  //   );
+  // }
 
   return (
     <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
@@ -148,7 +155,35 @@ export function DistributionChart() {
         <PieChart className="w-5 h-5 text-gray-400" />
       </div>
 
-      <div className="space-y-4">
+      <div className="mb-6 space-y-4">
+        <div className="bg-gray-50 dark:bg-gray-700/50 rounded-lg p-4">
+          <div className="flex items-start gap-3">
+            <Info className="w-5 h-5 text-blue-500 mt-0.5" />
+            <div>
+              <h4 className="text-sm font-medium mb-1">Portfolio Summary</h4>
+              <p className="text-sm text-gray-600 dark:text-gray-300">
+                Your portfolio contains {portfolioData.length} assets with a mix
+                of {portfolioData.map((item) => item.label).join(", ")}.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* {portfolioData.length === 1 && ( */}
+        <div className="bg-yellow-50 dark:bg-yellow-900/20 border border-yellow-200 dark:border-yellow-900/50 rounded-lg p-4">
+          <div className="flex items-start gap-3">
+            <div>
+              <p className="text-sm text-yellow-700 dark:text-yellow-300">
+                Consider diversifying your portfolio to reduce risk. Having all
+                assets in a single token may increase volatility.
+              </p>
+            </div>
+          </div>
+        </div>
+        {/* )} */}
+      </div>
+
+      <div className="space-y-6">
         {portfolioData.map((item) => (
           <div key={item.label} className="flex items-center gap-3">
             <div className={`w-3 h-3 rounded-full ${item.color}`} />

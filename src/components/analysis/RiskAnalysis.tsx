@@ -1,10 +1,10 @@
-import React from 'react';
-import { ShieldAlert } from 'lucide-react';
+import React from "react";
+import { ShieldAlert } from "lucide-react";
 
 export function RiskAnalysis() {
   return (
     <div className="bg-card dark:bg-gray-800 rounded-2xl p-6 shadow-lg">
-      <div className="flex items-center gap-2 mb-6">
+      {/* <div className="flex items-center gap-2 mb-6">
         <ShieldAlert className="w-5 h-5 text-primary" />
         <h2 className="text-lg font-semibold">Risk Analysis</h2>
       </div>
@@ -28,7 +28,7 @@ export function RiskAnalysis() {
             Speculative investments
           </p>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 }
