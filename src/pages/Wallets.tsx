@@ -1,25 +1,22 @@
-import React, { useState } from 'react';
-import { ConnectWallet } from '../components/wallets/ConnectWallet';
+import React from 'react';
+import { useAccount } from 'wagmi';
 import { WalletList } from '../components/wallets/WalletList';
+import { ConnectWallet } from '../components/wallets/ConnectWallet';
+import { ConnectWalletMessage } from '../components/shared/ConnectWalletMessage';
 
-interface WalletAccount {
-  address: string;
-  provider: string;
-}
+export default function Wallets() {
+  const { isConnected } = useAccount();
 
-export function Wallets() {
-  const [accounts, setAccounts] = useState<WalletAccount[]>([]);
-
-  const handleRemoveAccount = (address: string) => {
-    setAccounts(accounts => accounts.filter(acc => acc.address !== address));
-  };
+  if (!isConnected) {
+    return <ConnectWalletMessage />;
+  }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-2xl font-bold mb-8">Wallet Management</h1>
+    <div className="space-y-6">
+      <h1 className="text-2xl font-bold mb-8">Connected Wallets</h1>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
         <div className="lg:col-span-2">
-          <WalletList accounts={accounts} onRemoveAccount={handleRemoveAccount} />
+          <WalletList />
         </div>
         <div>
           <ConnectWallet />
