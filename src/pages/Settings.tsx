@@ -1,7 +1,15 @@
 import React from 'react';
-import { User, Bell, Shield, Wallet } from 'lucide-react';
+import { useAccount } from 'wagmi';
+import { User, Bell, Shield } from 'lucide-react';
+import { ConnectWalletMessage } from '../components/shared/ConnectWalletMessage';
 
 export default function Settings() {
+  const { isConnected } = useAccount();
+
+  if (!isConnected) {
+    return <ConnectWalletMessage />;
+  }
+
   return (
     <div className="max-w-4xl mx-auto">
       <h1 className="text-2xl font-bold mb-8">Settings</h1>

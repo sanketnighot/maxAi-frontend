@@ -156,7 +156,7 @@ export function DistributionChart() {
               <div className="flex justify-between items-center">
                 <span className="text-sm font-medium">{item.label}</span>
                 <span className="text-sm text-gray-600 dark:text-gray-400">
-                  {item.value} ({item.amount})
+                  {item.value} ({Number(item.amount).toFixed(5)})
                 </span>
               </div>
               <div className="mt-1 h-2 bg-gray-100 dark:bg-gray-700 rounded-full overflow-hidden">
