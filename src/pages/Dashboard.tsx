@@ -1,20 +1,16 @@
-import React from 'react';
-import { PortfolioCard } from '../components/dashboard/PortfolioCard';
-import { DistributionChart } from '../components/dashboard/DistributionChart';
-import { OpportunityCard } from '../components/dashboard/OpportunityCard';
-import { useAccount } from 'wagmi';
-import { ConnectButton } from '@rainbow-me/rainbowkit';
+import React from "react";
+import { PortfolioCard } from "../components/dashboard/PortfolioCard";
+import { DistributionChart } from "../components/dashboard/DistributionChart";
+import { OpportunityCard } from "../components/dashboard/OpportunityCard";
+import { useAccount } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import Landing from "../components/onboarding/Landing";
 
 export default function Dashboard() {
   const { isConnected } = useAccount();
 
   if (!isConnected) {
-    return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] space-y-6">
-        <h1 className="text-2xl font-bold text-center">Connect your wallet to view your portfolio</h1>
-        <ConnectButton />
-      </div>
-    );
+    return <Landing />;
   }
 
   return (
