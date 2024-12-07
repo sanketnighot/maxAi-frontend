@@ -1,30 +1,6 @@
 import React from 'react';
 import { Plus } from 'lucide-react';
 import { ConnectButton } from '@rainbow-me/rainbowkit';
-import { Chain } from 'wagmi';
-
-interface Account {
-  address: string;
-  balanceDecimals?: number;
-  balanceFormatted?: string;
-  balanceSymbol?: string;
-  displayBalance?: string;
-  displayName: string;
-  ensAvatar?: string;
-  ensName?: string;
-}
-
-interface CustomButtonProps {
-  account?: Account;
-  chain?: Chain & {
-    hasIcon: boolean;
-    iconUrl?: string;
-  };
-  openAccountModal?: () => void;
-  openChainModal?: () => void;
-  openConnectModal?: () => void;
-  mounted: boolean;
-}
 
 export function ConnectWallet() {
   return (
@@ -34,75 +10,21 @@ export function ConnectWallet() {
         <h2 className="text-lg font-semibold">Connect Wallet</h2>
       </div>
 
-      <div className="space-y-3">
+      <div className="space-y-4">
         <ConnectButton.Custom>
           {({
-            account,
-            chain,
-            openAccountModal,
-            openChainModal,
             openConnectModal,
             mounted,
-          }: CustomButtonProps) => {
-            const ready = mounted;
-            const connected = ready && account && chain;
+          }) => {
+            if (!mounted) return null;
 
             return (
-              <div
-                {...(!ready && {
-                  'aria-hidden': true,
-                  style: {
-                    opacity: 0,
-                    pointerEvents: 'none',
-                    userSelect: 'none',
-                  },
-                })}
+              <button
+                onClick={openConnectModal}
+                className="w-full flex items-center justify-center gap-3 p-3 bg-[rgb(5,0,255)] text-white rounded-xl hover:bg-[rgb(5,0,255)]/90 transition-colors font-medium"
               >
-                {(() => {
-                  if (!connected) {
-                    return (
-                      <button
-                        onClick={openConnectModal}
-                        className="w-full flex items-center justify-center gap-3 p-3 bg-[rgb(5,0,255)] text-white rounded-xl hover:bg-[rgb(5,0,255)]/90 transition-colors font-medium"
-                      >
-                        Connect Wallet
-                      </button>
-                    );
-                  }
-
-                  return (
-                    <div className="space-y-3">
-                      <button
-                        onClick={openChainModal}
-                        className="w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                      >
-                        {chain.hasIcon && (
-                          <div className="w-6 h-6">
-                            {chain.iconUrl && (
-                              <img
-                                alt={chain.name ?? 'Chain icon'}
-                                src={chain.iconUrl}
-                                className="w-6 h-6"
-                              />
-                            )}
-                          </div>
-                        )}
-                        <span className="font-medium">{chain.name}</span>
-                      </button>
-
-                      <button
-                        onClick={openAccountModal}
-                        className="w-full flex items-center justify-between p-3 bg-gray-50 dark:bg-gray-700 rounded-xl hover:bg-gray-100 dark:hover:bg-gray-600 transition-colors"
-                      >
-                        <span className="font-medium">{account.displayName}</span>
-                        <span className="text-gray-600 dark:text-gray-400">
-                          {account.displayBalance ? `${account.displayBalance}` : ''}
-                        </span>
-                      </button>
-                    </div>
-                  );
-                })()}
-              </div>
+                Connect Wallet
+              </button>
             );
           }}
         </ConnectButton.Custom>
