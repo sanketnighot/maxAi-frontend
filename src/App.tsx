@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Analysis from './pages/Analysis';
 import Wallets from './pages/Wallets';
 import Settings from './pages/Settings';
+import { ErrorBoundary } from './components/shared/ErrorBoundary';
 
 function App() {
   return (
@@ -18,7 +19,11 @@ function App() {
             <main className="pt-24 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
               <Routes>
                 <Route path="/" element={<Dashboard />} />
-                <Route path="/analysis" element={<Analysis />} />
+                <Route path="/analysis" element={
+                  <ErrorBoundary>
+                    <Analysis />
+                  </ErrorBoundary>
+                } />
                 <Route path="/wallets" element={<Wallets />} />
                 <Route path="/settings" element={<Settings />} />
               </Routes>

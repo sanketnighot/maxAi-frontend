@@ -3,7 +3,6 @@ import { PortfolioCard } from "../components/dashboard/PortfolioCard";
 import { DistributionChart } from "../components/dashboard/DistributionChart";
 import { OpportunityCard } from "../components/dashboard/OpportunityCard";
 import { useAccount } from "wagmi";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Landing from "../components/onboarding/Landing";
 
 export default function Dashboard() {

@@ -1,8 +1,11 @@
 import { ConnectButton } from "@rainbow-me/rainbowkit";
-import { ArrowRight, Sparkles } from "lucide-react";
+import { ArrowRight, Sparkles, Loader2 } from "lucide-react";
 import { Button } from "../ui/Button";
+import { useState } from "react";
 
 export function HeroSection() {
+  const [isAnalyzing, setIsAnalyzing] = useState(false);
+
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-primary/5 to-transparent py-20 sm:py-32">
       <div className="container px-4 sm:px-6 lg:px-8 text-center">
@@ -28,7 +31,6 @@ export function HeroSection() {
             {({
               account,
               chain,
-              openAccountModal,
               openChainModal,
               openConnectModal,
               mounted,
@@ -56,7 +58,7 @@ export function HeroSection() {
                           size="lg"
                           className="text-lg px-8"
                         >
-                          Get Started
+                          Connect Wallet
                           <ArrowRight className="ml-2 h-5 w-5" />
                         </Button>
                       );
@@ -95,12 +97,43 @@ export function HeroSection() {
                         </Button>
 
                         <Button
-                          onClick={openAccountModal}
+                          onClick={async () => {
+                            setIsAnalyzing(true);
+                            try {
+                              const response = await fetch('http://localhost:8000/api/portfolio-analyzer', {
+                                method: 'POST',
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                body: JSON.stringify({
+                                  address: account.address,
+                                  chain: chain.id,
+                                  duration: 86400
+                                }),
+                              });
+                               await response.json();
+                              // Handle the response data as needed
+                            } catch (error) {
+                              console.error('Error analyzing portfolio:', error);
+                            } finally {
+                              setIsAnalyzing(false);
+                            }
+                          }}
                           type="button"
                           size="lg"
+                          disabled={isAnalyzing}
                         >
-                          {account.displayName}
-                          <ArrowRight className="ml-2 h-5 w-5" />
+                          {isAnalyzing ? (
+                            <>
+                              <Loader2 className="mr-2 h-5 w-5 animate-spin" />
+                              Analyzing...
+                            </>
+                          ) : (
+                            <>
+                              Analyze Portfolio
+                              <ArrowRight className="ml-2 h-5 w-5" />
+                            </>
+                          )}
                         </Button>
                       </div>
                     );

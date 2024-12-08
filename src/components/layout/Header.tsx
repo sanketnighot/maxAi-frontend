@@ -1,5 +1,5 @@
 import React from 'react';
-import { Wallet2, LayoutDashboard, LineChart, History, Sun, Moon } from 'lucide-react';
+import { Wallet2, LayoutDashboard, LineChart, Sun, Moon } from 'lucide-react';
 import { Logo } from './Logo';
 import { ProfileMenu } from './ProfileMenu';
 import { useTheme } from '../../contexts/ThemeContext';
@@ -23,7 +23,7 @@ export function Header() {
                 { icon: LayoutDashboard, label: 'Dashboard', path: '/' },
                 { icon: LineChart, label: 'Analysis', path: '/analysis' },
                 { icon: Wallet2, label: 'Wallets', path: '/wallets' },
-                { icon: History, label: 'History', path: '/history' },
+                // { icon: History, label: 'History', path: '/history' },
               ].map((item) => (
                 <Link
                   key={item.label}
