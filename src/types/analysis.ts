@@ -54,26 +54,22 @@ export interface PortfolioAnalysis {
 }
 
 export interface CategorizedToken {
-  name: string;
-  symbol: string;
-  balance: string;
-  value: number;
+  token_symbol: string;
+  token_name: string;
+  value: string;
+  // Add other token properties as needed
 }
 
 export interface CategoryResponse {
-  wallet_address: string;
-  categories: {
-    DeFi: CategorizedToken[];
-    Stablecoins: CategorizedToken[];
-    Memecoins: CategorizedToken[];
-    L1s: CategorizedToken[];
-    L2s: CategorizedToken[];
-    Infrastructure: CategorizedToken[];
-    Gaming: CategorizedToken[];
-    DAOs: CategorizedToken[];
-    Metaverse: CategorizedToken[];
-    GovernanceTokens: CategorizedToken[];
-    PrivacyCoins: CategorizedToken[];
-    Others: CategorizedToken[];
+  success: boolean;
+  data: {
+    categories: {
+      DAOs?: CategorizedToken[];
+      DeFi?: CategorizedToken[];
+      Infrastructure?: CategorizedToken[];
+      Memecoins?: CategorizedToken[];
+      Others?: CategorizedToken[];
+      [key: string]: CategorizedToken[] | undefined;
+    };
   };
 } 

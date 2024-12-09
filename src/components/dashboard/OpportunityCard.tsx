@@ -1,30 +1,44 @@
 import React from 'react';
-import { Sparkles, ArrowRight } from 'lucide-react';
+import { ArrowTrendingUpIcon } from '@heroicons/react/24/outline';
 
-export function OpportunityCard() {
-  return (
-    <div className="bg-primary text-white rounded-2xl p-6 shadow-lg">
-      <div className="flex items-center gap-2 mb-4">
-        <Sparkles className="w-6 h-6" />
-        <h3 className="text-lg font-semibold">AI Recommendations</h3>
+interface OpportunityCardProps {
+  suggestions?: {
+    token_name: string;
+    amount: string;
+  };
+}
+
+export function OpportunityCard({ suggestions }: OpportunityCardProps) {
+  if (!suggestions) {
+    return (
+      <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+        <h2 className="text-xl font-semibold mb-4">AI Recommendations</h2>
+        <p className="text-sm text-gray-600 dark:text-gray-300">
+          No recommendations available at this time.
+        </p>
       </div>
+    );
+  }
 
+  return (
+    <div className="p-6 bg-white dark:bg-gray-800 rounded-xl shadow-lg">
+      <h2 className="text-xl font-semibold mb-4">AI Recommendations</h2>
       <div className="space-y-4">
-        <div className="bg-white/25 backdrop-blur-lg rounded-xl p-4">
-          <p className="font-medium mb-2">Staking Opportunity</p>
-          <p className="text-sm text-white/80 mb-3">Stake ETH for up to 12% APY</p>
-          <button className="flex items-center gap-2 text-sm font-medium hover:gap-3 transition-all">
-            Learn More <ArrowRight className="w-4 h-4" />
-          </button>
+        <div className="flex items-center gap-2">
+          <div className="p-2 bg-primary/10 rounded-lg">
+            <ArrowTrendingUpIcon className="w-6 h-6 text-primary" />
+          </div>
+          <div>
+            <h3 className="font-medium">Staking Opportunity</h3>
+            <p className="text-sm text-gray-600 dark:text-gray-300">
+              Stake {suggestions.amount} {suggestions.token_name}
+            </p>
+          </div>
         </div>
-
-        <div className="bg-white/25 backdrop-blur-lg rounded-xl p-4">
-          <p className="font-medium mb-2">Upcoming Airdrop</p>
-          <p className="text-sm text-white/80 mb-3">Eligible for LayerZero airdrop</p>
-          <button className="flex items-center gap-2 text-sm font-medium hover:gap-3 transition-all">
-            Check Eligibility <ArrowRight className="w-4 h-4" />
-          </button>
-        </div>
+        
+        <button className="w-full px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors">
+          Start Staking
+        </button>
       </div>
     </div>
   );

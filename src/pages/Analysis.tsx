@@ -5,7 +5,7 @@ import { MarketCapAnalysis } from '../components/analysis/MarketCapAnalysis';
 import { RiskAnalysis } from '../components/analysis/RiskAnalysis';
 import { ConnectWalletMessage } from '../components/shared/ConnectWalletMessage';
 import { useQuery } from '@tanstack/react-query';
-import type { PortfolioAnalysis, CategoryResponse } from '../types/analysis';
+import type { PortfolioAnalysis, CategoryResponse, CategorizedToken } from '../types/analysis';
 import { PortfolioMetrics } from '../components/analysis/PortfolioMetrics';
 
 const API_BASE_URL = 'http://localhost:8000/api';
@@ -21,7 +21,7 @@ export default function Analysis() {
     queryKey: ['analysis', address],
     queryFn: async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/analysis/${address}`);
+        const response = await fetch(`${API_BASE_URL}/analysis/0x00000000219ab540356cBB839Cbe05303d7705Fa`);
         if (!response.ok) {
           throw new Error(`Analysis API error: ${response.status}`);
         }
@@ -45,32 +45,18 @@ export default function Analysis() {
     queryKey: ['categories', address],
     queryFn: async () => {
       try {
-        const response = await fetch(`${API_BASE_URL}/categorization/${address}`);
+        const response = await fetch(`${API_BASE_URL}/categorization/0x00000000219ab540356cBB839Cbe05303d7705Fa`);
         if (!response.ok) {
           throw new Error(`Category API error: ${response.status}`);
         }
         const data = await response.json();
-        console.log('Raw category data:', data); // Debug log
         
-        // Ensure we have the correct data structure
-        if (!data || !data.categories) {
-          return {
-            wallet_address: address,
-            categories: {
-              DeFi: [],
-              Stablecoins: [],
-              Memecoins: [],
-              L1s: [],
-              L2s: [],
-              Infrastructure: [],
-              Gaming: [],
-              DAOs: [],
-              Metaverse: [],
-              GovernanceTokens: [],
-              PrivacyCoins: [],
-              Others: []
-            }
-          };
+        if (process.env.NODE_ENV === 'development') {
+          console.log('Category data:', data);
+        }
+        
+        if (!data?.success || !data?.data?.categories) {
+          throw new Error('Invalid category data received from API');
         }
         
         return data;
@@ -133,8 +119,15 @@ export default function Analysis() {
       <PortfolioMetrics analysis={analysisData} />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {categoryData?.categories && ( // Add null check here
-          <CategoryAnalysis categories={categoryData.categories} />
+        {categoryData?.data?.categories && (
+          <CategoryAnalysis 
+            categories={Object.fromEntries(
+              Object.entries(categoryData.data.categories)
+                .filter((entry): entry is [string, CategorizedToken[]] => 
+                  Array.isArray(entry[1])
+                )
+            )} 
+          />
         )}
         <MarketCapAnalysis analysis={analysisData} />
       </div>
